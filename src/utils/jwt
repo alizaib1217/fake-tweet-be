@@ -1,0 +1,37 @@
+const jwt = require("jsonwebtoken");
+
+module.exports = {
+  generateToken: async ({ email, password }) => {
+    try {
+      const data = {
+        email,
+        password,
+      };
+      const jsonwebtoken = await jwt.sign(data, 'MySecretKey##2022', {
+        expiresIn: "20h",
+      });
+      return jsonwebtoken;
+    } catch (e) {
+      console.log(e.message);
+      return false;
+    }
+  },
+  verifyToken: async (token) => {
+    try {
+      return await jwt.verify(token, 'MySecretKey##2022');
+    } catch (err) {
+      console.log(err.message);
+      return false;
+    }
+  },
+  refreshToken: (data) => {
+    // token data compare the password and other data
+    // if good then generate a new token
+    try {
+      return "token";
+    } catch (err) {
+      console.log(err.message);
+      return false;
+    }
+  },
+};
